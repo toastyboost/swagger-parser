@@ -1,0 +1,42 @@
+post:
+  summary: Return full information about account by id
+  operationId: bankProductsDetailsGet
+  tags:
+    - Bank products
+  security:
+    - apiKey: []
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../dbo-api.yaml#/components/parameters/RequestId'
+  requestBody:
+    description: Bank product ID
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - id
+          properties:
+            id: { type: string }
+          example:
+            id: '54baae37-894b-4491-a8da-8189864a3126'
+  responses:
+    200:
+      description: Full bank product info
+      content:
+        application/json:
+          schema:
+            $ref: '../../../dbo-api.yaml#/components/schemas/BankProductDetails'
+    400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../dbo-api.yaml#/components/schemas/TechnicalError'
+              - $ref: '../../../dbo-api.yaml#/components/schemas/ValidationError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'
+    500:
+      $ref: '../../../errors.yaml#/InternalError'

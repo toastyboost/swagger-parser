@@ -1,0 +1,37 @@
+type: object
+description: 'Client card'
+required:
+  - id
+  - name
+  - maskedPan
+  - brand
+  - expiredMonth
+  - expiredYear
+  - isActive
+properties:
+  id:
+    type: string
+    example: 'd71abd6d-09ed-4bcc-aa21-7467d6fa328e'
+  name:
+    type: string
+    example: 'Mega Friends'
+  userDescription:
+    type: string
+    description: 'Пользоветельское описание карты'
+    example: 'Моя любимая карта'
+  maskedPan:
+    type: string
+    example: '1489'
+  brand:
+    type: string
+    enum: [VISA, MASTER_CARD]
+    example: 'VISA'
+  expiredMonth:
+    type: integer
+    example: 10
+  expiredYear:
+    type: integer
+    example: 24
+  isActive:
+    type: boolean
+    example: true

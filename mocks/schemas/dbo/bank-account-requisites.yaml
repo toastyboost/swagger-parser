@@ -1,0 +1,33 @@
+type: object
+required:
+  - bankName
+  - correspondentAccount
+  - bic
+  - fullName
+  - bankCode
+  - accountNumber
+properties:
+  bankName:
+    type: string
+    description: Наименование банка
+    example: ООО "Икано Банк"
+  correspondentAccount:
+    type: string
+    description: Корресподентский счёт
+    example: '30101810600000000766'
+  bic:
+    type: string
+    description: БИК
+    example: '044525766'
+  fullName:
+    type: string
+    description: ФИО клиента
+    example: Тарасовский Егор Всеволодович
+  bankCode:
+    type: string
+    description: КПП банка
+    example: '504701001'
+  accountNumber:
+    type: string
+    description: Номер счета
+    example: '40817810550011001289'

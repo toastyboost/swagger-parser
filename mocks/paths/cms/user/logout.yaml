@@ -1,0 +1,22 @@
+post:
+  summary: logout from cms
+  operationId: userLogout
+  tags:
+    - User
+  security:
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../cms-api.yaml#/components/parameters/RequestId'
+  responses:
+    200:
+      description: logout is success
+    400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../cms-api.yaml#/components/schemas/TechnicalError'
+              - $ref: '../../../cms-api.yaml#/components/schemas/ValidationError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'

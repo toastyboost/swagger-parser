@@ -1,0 +1,58 @@
+openapi: 3.0.1
+info:
+  title: CMS API
+  termsOfService: http://swagger.io/terms/
+  version: 0.1.0
+servers:
+  - url: https://ikano-gateway-rmr-dev.apps.ikano.ru/cms/api/{version}
+    variables:
+      version:
+        default: v0
+        enum:
+          - v0
+          - v1
+
+paths:
+  /promo/list-get:
+    $ref: 'paths/cms/promo/list-get.yaml'
+  /promo/create:
+    $ref: 'paths/cms/promo/create.yaml'
+  /promo/update:
+    $ref: './paths/cms/promo/update.yaml'
+  /user/current-get:
+    $ref: './paths/cms/user/current-get.yaml'
+  /file/promo-image-upload:
+    $ref: './paths/cms/file/promo-image-upload.yaml'
+  /user/signin:
+    $ref: './paths/cms/user/signin.yaml'
+  /user/logout:
+    $ref: './paths/cms/user/logout.yaml'
+  /user/refresh-access-cookie:
+    $ref: './paths/cms/user/refresh-access-cookie.yaml'
+
+components:
+  securitySchemes:
+    cookieKey:
+      type: apiKey
+      name: accessToken
+      in: cookie
+
+  parameters:
+    RequestId:
+      name: X-Request-ID
+      description: An identifier of the request
+      in: header
+      required: true
+      schema:
+        type: string
+      example: '87692990-ab78-4e11-90ed-1088bf95a531'
+
+  schemas:
+    Promo:
+      $ref: './schemas/cms/promo.yaml'
+    User:
+      $ref: './schemas/cms/user.yaml'
+    TechnicalError:
+      $ref: './errors.yaml#/TechnicalError'
+    ValidationError:
+      $ref: './errors.yaml#/ValidationError'

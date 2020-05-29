@@ -1,0 +1,57 @@
+openapi: 3.0.1
+info:
+  title: Admin API
+  termsOfService: http://swagger.io/terms/
+  version: 0.1.0
+servers:
+  - url: https://ikano-gateway-rmr-dev.apps.ikano.ru/admin/api/{version}
+    variables:
+      version:
+        default: v1
+        enum:
+          - v1
+
+paths:
+  /user/current-get:
+    $ref: "./paths/admin/user/current-get.yaml"
+  /user/signin:
+    $ref: "./paths/admin/user/signin.yaml"
+  /user/logout:
+    $ref: "./paths/admin/user/logout.yaml"
+  /user/refresh-access-cookie:
+    $ref: "./paths/admin/user/refresh-access-cookie.yaml"
+  /user/password-change:
+    $ref: "./paths/admin/user/password-change.yaml"
+  /customer/find:
+    $ref: "./paths/admin/customer/find.yaml"
+  /customer/block:
+    $ref: "./paths/admin/customer/block.yaml"
+  /customer/unblock:
+    $ref: "./paths/admin/customer/unblock.yaml"
+
+components:
+  securitySchemes:
+    cookieKey:
+      type: apiKey
+      name: accessToken
+      in: cookie
+
+  parameters:
+    RequestId:
+      name: X-Request-ID
+      description: An identifier of the request
+      in: header
+      required: true
+      schema:
+        type: string
+      example: "87692990-ab78-4e11-90ed-1088bf95a531"
+
+  schemas:
+    User:
+      $ref: "./schemas/admin/user.yaml"
+    Customer:
+      $ref: "./schemas/admin/customer.yaml"
+    TechnicalError:
+      $ref: "./errors.yaml#/TechnicalError"
+    ValidationError:
+      $ref: "./errors.yaml#/ValidationError"

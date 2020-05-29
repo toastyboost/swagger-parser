@@ -1,0 +1,42 @@
+post:
+  summary: get requisits for user bank account
+  operationId: getAccountRequisites
+  tags:
+    - Bank products
+  security:
+    - apiKey: []
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../dbo-api.yaml#/components/parameters/RequestId'
+  requestBody:
+    description: bank product id
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - bankProductId
+          properties:
+            bankProductId:
+              type: string
+              example: '528134455'
+  responses:
+    '200':
+      description: Bank account requisits
+      content:
+        application/json:
+          schema:
+            $ref: '../../../dbo-api.yaml#/components/schemas/BankAccountRequisites'
+    '400':
+      description: Error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../dbo-api.yaml#/components/schemas/TechnicalError'
+              - $ref: '../../../dbo-api.yaml#/components/schemas/ValidationError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'
+    500:
+      $ref: '../../../errors.yaml#/InternalError'

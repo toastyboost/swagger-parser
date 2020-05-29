@@ -1,0 +1,35 @@
+type: object
+description: Filter for promo items
+properties: 
+  cities:
+    type: array
+    items:
+      type: object
+      required:
+        - code
+        - name
+      properties:
+        code: 
+          type: string
+          example: 'b894ae27-e1b5-4dec-a5ec-32bacb8aa3ef'
+        name: 
+          type: string
+          example: 'Москва'
+        megas:
+          type: array
+          items:
+            type: object
+            required:
+              - id
+              - name
+            properties:
+              id: 
+                type: string
+                example: '54fc8a07-61bf-4544-99ba-fbcb7f7be79a'
+              name:
+                type: string
+                example: 'МЕГА Парнас'
+  categories:
+    type: array
+    items:
+      $ref: '../../dbo-api.yaml#/components/schemas/PromoCategory'

@@ -1,0 +1,512 @@
+openapi: 3.0.1
+info:
+  title: CMS API
+  termsOfService: 'http://swagger.io/terms/'
+  version: 0.1.0
+servers:
+  - url: 'https://ikano-gateway-rmr-dev.apps.ikano.ru/cms/api/{version}'
+    variables:
+      version:
+        default: v0
+        enum:
+          - v0
+          - v1
+paths:
+  /promo/list-get:
+    post:
+      summary: Get list of promotions
+      operationId: cmsPromoListGet
+      tags:
+        - Promo
+      security:
+        - apiKey: []
+        - cookieKey: []
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          description: List of promotions
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - promo
+                properties:
+                  promo:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Promo'
+        '400':
+          description: Technical error
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/TechnicalError'
+        '401':
+          $ref: '#/paths/~1user~1logout/post/responses/401'
+        '500':
+          $ref: '#/paths/~1promo~1create/post/responses/500'
+  /promo/create:
+    post:
+      summary: Create promotions
+      operationId: promoCreate
+      tags:
+        - Promo
+      security:
+        - apiKey: []
+        - cookieKey: []
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      requestBody:
+        description: List of promotions to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - promo
+              properties:
+                promo:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Promo'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                CreatedAndFailed:
+                  description: 'Created 2, Failed 2'
+                  value:
+                    failed:
+                      - id: 9513ea6f-39aa-404d-abba-a5db87f49040
+                        error: DUPLICATED
+                        invalidFieldName: email
+                      - id: df9a9291-c58c-40f6-aba2-7fc7ab6139c5
+                        error: VALIDATION
+                        invalidFieldName: title
+                    success:
+                      - 2202e373-2fb6-4ccd-a7f3-d91bc0ac0160
+                      - 64ed21a4-0ebc-4027-beab-4b28980499e6
+              schema:
+                type: object
+                description: Deep validation error
+                required:
+                  - code
+                  - failed
+                  - success
+                properties:
+                  failed:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - error
+                        - id
+                      properties:
+                        invalidFieldName:
+                          type: string
+                          description: Key is a failed field
+                        error:
+                          type: string
+                          enum:
+                            - VALIDATION
+                            - DUPLICATED
+                        id:
+                          type: string
+                  success:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          description: Technical or validation error
+          content:
+            application/json:
+              examples:
+                TechnicalError:
+                  value:
+                    code: TECHNICAL_ERROR
+              schema:
+                $ref: '#/components/schemas/TechnicalError'
+        '401':
+          $ref: '#/paths/~1user~1logout/post/responses/401'
+        '500':
+          description: Something went wrong
+  /promo/update:
+    post:
+      summary: Update promotion
+      operationId: promoUpdate
+      tags:
+        - Promo
+      security:
+        - cookieKey: []
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      requestBody:
+        description: Content of an updated promotion
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - promo
+              properties:
+                promo:
+                  $ref: '#/components/schemas/Promo'
+      responses:
+        '200':
+          description: Promo updated
+          content:
+            application/json:
+              schema:
+                value: Update is success
+        '400':
+          description: Technical or validation error
+          content:
+            application/json:
+              examples:
+                TechnicalError:
+                  value:
+                    code: TECHNICAL_ERROR
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/TechnicalError'
+                  - $ref: '#/components/schemas/ValidationError'
+        '401':
+          $ref: '#/paths/~1user~1logout/post/responses/401'
+        '500':
+          $ref: '#/paths/~1promo~1create/post/responses/500'
+  /user/current-get:
+    post:
+      summary: Get info about current user
+      operationId: userCurrentGet
+      tags:
+        - User
+      security:
+        - cookieKey: []
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          description: Info about current user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TechnicalError'
+        '401':
+          $ref: '#/paths/~1user~1logout/post/responses/401'
+  /file/promo-image-upload:
+    post:
+      summary: Upload image for promo
+      operationId: filePromoImageUpload
+      tags:
+        - File
+      security:
+        - cookieKey: []
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              file:
+                contentType: 'image/png, image/jpeg'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Url to uploaded image
+                required:
+                  - imageUrl
+                properties:
+                  imageUrl:
+                    type: string
+                    example: 'http://ikano.ru/image/424.jpg'
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/TechnicalError'
+                  - $ref: '#/components/schemas/ValidationError'
+        '401':
+          $ref: '#/paths/~1user~1logout/post/responses/401'
+        '500':
+          $ref: '#/paths/~1promo~1create/post/responses/500'
+  /user/signin:
+    post:
+      summary: signin in to cms
+      operationId: userSignin
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      requestBody:
+        description: User credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - login
+                - password
+              properties:
+                login:
+                  type: string
+                password:
+                  type: string
+              example:
+                login: '+79224444422'
+                password: testPassword1@
+      responses:
+        '200':
+          description: Signin is success
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/TechnicalError'
+                  - $ref: '#/components/schemas/ValidationError'
+  /user/logout:
+    post:
+      summary: logout from cms
+      operationId: userLogout
+      tags:
+        - User
+      security:
+        - cookieKey: []
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          description: logout is success
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/TechnicalError'
+                  - $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: User is unauthorised
+  /user/refresh-access-cookie:
+    post:
+      summary: refresh access cookies for cms
+      operationId: userRefreshAccessCookie
+      tags:
+        - User
+      security:
+        - cookieKey: []
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          description: refresh is success
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TechnicalError'
+        '401':
+          $ref: '#/paths/~1user~1logout/post/responses/401'
+components:
+  securitySchemes:
+    cookieKey:
+      type: apiKey
+      name: accessToken
+      in: cookie
+  parameters:
+    RequestId:
+      name: X-Request-ID
+      description: An identifier of the request
+      in: header
+      required: true
+      schema:
+        type: string
+      example: 87692990-ab78-4e11-90ed-1088bf95a531
+  schemas:
+    Promo:
+      type: object
+      description: Promotion
+      required:
+        - id
+        - title
+        - description
+        - content
+        - isPersistent
+        - isDisabled
+        - period
+        - filter
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        content:
+          type: string
+        categories:
+          type: array
+          items:
+            type: object
+            required:
+              - id
+            properties:
+              id:
+                type: string
+              description:
+                type: string
+              label:
+                type: string
+        isPersistent:
+          type: boolean
+          description: "promotion work always, don't need to activate it"
+        isDisabled:
+          type: boolean
+          description: hide promotion from customers
+        picture:
+          type: string
+          description: link or some representation of the picture
+        period:
+          type: object
+          description: when promotion start and end working
+          properties:
+            start:
+              type: number
+              description: unix timestamp
+            end:
+              type: number
+              description: unix timestamp
+        filter:
+          type: object
+          description: selects customers to show by criteria
+          required:
+            - location
+          properties:
+            cities:
+              type: array
+              items:
+                type: object
+                required:
+                  - code
+                properties:
+                  code:
+                    type: string
+                  label:
+                    type: string
+            customerIds:
+              type: array
+              description: Show promotion only for customers with specified ids
+              items:
+                type: string
+            email:
+              type: array
+              description: 'only for customers with email, without or both'
+              items:
+                type: string
+                enum:
+                  - EXIST
+                  - EMPTY
+            location:
+              type: string
+              enum:
+                - WORLDWIDE
+                - MEGA
+            mega:
+              type: string
+            productCode:
+              type: string
+            productType:
+              type: array
+              items:
+                type: string
+                enum:
+                  - DEBIT_CARDS
+                  - CREDIT_CARDS
+            program:
+              type: string
+              enum:
+                - MEGA_FRIENDS
+                - IKEA_FAMILY
+            sex:
+              type: array
+              items:
+                type: string
+                enum:
+                  - MALE
+                  - FEMALE
+                  - UNKNOWN
+            children:
+              type: array
+              items:
+                type: string
+                enum:
+                  - 'YES'
+                  - 'NO'
+                  - UNKNOWN
+    User:
+      type: object
+      description: Session and user info
+      required:
+        - role
+      properties:
+        role:
+          type: string
+          enum:
+            - ROLE_CALL_CENTER_OPERATOR
+            - ROLE_SECURITY_OFFICER
+            - ROLE_SUPER_ADMIN
+    TechnicalError:
+      type: object
+      description: Technical error
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - TECHNICAL_ERROR
+      example:
+        code: TECHNICAL_ERROR
+    ValidationError:
+      type: object
+      description: Validation error
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          enum:
+            - VALIDATION_ERROR
+        invalidFieldName:
+          type: string

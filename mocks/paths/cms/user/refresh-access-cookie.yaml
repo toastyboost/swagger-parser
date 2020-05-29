@@ -1,0 +1,20 @@
+post:
+  summary: refresh access cookies for cms
+  operationId: userRefreshAccessCookie
+  tags:
+    - User
+  security:
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../cms-api.yaml#/components/parameters/RequestId'
+  responses:
+    200:
+      description: refresh is success
+    400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '../../../cms-api.yaml#/components/schemas/TechnicalError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'

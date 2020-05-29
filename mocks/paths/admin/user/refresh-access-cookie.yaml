@@ -1,0 +1,22 @@
+post:
+  summary: refresh access cookies for customer admin panel
+  operationId: userRefreshAccessCookie
+  tags:
+    - User
+  security:
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../admin-api.yaml#/components/parameters/RequestId'
+  responses:
+    200:
+      description: refresh is success
+    400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '../../../admin-api.yaml#/components/schemas/TechnicalError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'
+    500:
+      $ref: '../../../errors.yaml#/InternalError'

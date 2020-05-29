@@ -1,0 +1,23 @@
+post:
+  summary: logout from customer admin panel
+  operationId: userLogout
+  tags:
+    - User
+  security:
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../admin-api.yaml#/components/parameters/RequestId'
+  responses:
+    200:
+      description: logout is success
+    400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../admin-api.yaml#/components/schemas/TechnicalError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'
+    500:
+      $ref: '../../../errors.yaml#/InternalError'

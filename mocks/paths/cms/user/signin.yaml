@@ -1,0 +1,34 @@
+post:
+  summary: signin in to cms
+  operationId: userSignin
+  tags:
+    - User
+  parameters:
+    - $ref: '../../../cms-api.yaml#/components/parameters/RequestId'
+  requestBody:
+    description: User credentials
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - login
+            - password
+          properties:
+            login: { type: string }
+            password: { type: string }
+          example:
+            login: '+79224444422'
+            password: 'testPassword1@'
+  responses:
+    200:
+      description: Signin is success
+    400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../cms-api.yaml#/components/schemas/TechnicalError'
+              - $ref: '../../../cms-api.yaml#/components/schemas/ValidationError'

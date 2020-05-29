@@ -1,0 +1,37 @@
+post:
+  summary: All user bank products
+  operationId: bankProductsListGet
+  tags:
+    - Bank products
+  security:
+    - apiKey: []
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../dbo-api.yaml#/components/parameters/RequestId'
+  responses:
+    200:
+      description: List of user bank products
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              products:
+                type: array
+                items:
+                  $ref: '../../../dbo-api.yaml#/components/schemas/BankProduct'
+              programs:
+                type: array
+                items:
+                  $ref: '../../../dbo-api.yaml#/components/schemas/Program'
+    400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../dbo-api.yaml#/components/schemas/TechnicalError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'
+    500:
+      $ref: '../../../errors.yaml#/InternalError'

@@ -1,0 +1,16 @@
+type: object
+required:
+  - status
+  - sum
+properties:
+  status:
+    type: string
+    enum: [NOT_PAID, PAID, EXPIRED]
+    example: 'NOT_PAID'
+  date:
+    type: string
+    format: integer
+    example: 1668211200
+  sum:
+    type: number
+    example: 1000

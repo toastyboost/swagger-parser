@@ -1,0 +1,106 @@
+type: object
+description: Promotion
+required:
+  - id
+  - title
+  - description
+  - content
+  - isPersistent
+  - isDisabled
+  - period
+  - filter
+properties:
+  id:
+    type: string
+  title:
+    type: string
+  description:
+    type: string
+  content:
+    type: string
+  categories:
+    type: array
+    items:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        label:
+          type: string
+  isPersistent:
+    type: boolean
+    description: promotion work always, don't need to activate it
+  isDisabled:
+    type: boolean
+    description: hide promotion from customers
+  picture:
+    type: string
+    description: link or some representation of the picture
+  period:
+    type: object
+    description: when promotion start and end working
+    properties:
+      start:
+        type: number
+        description: unix timestamp
+      end:
+        type: number
+        description: unix timestamp
+  filter:
+    type: object
+    description: selects customers to show by criteria
+    required:
+      - location
+    properties:
+      cities:
+        type: array
+        items:
+          type: object
+          required:
+            - code
+          properties:
+            code:
+              type: string
+            label:
+              type: string
+      customerIds:
+        type: array
+        description: Show promotion only for customers with specified ids
+        items:
+          type: string
+      email:
+        type: array
+        description: only for customers with email, without or both
+        items:
+          type: string
+          enum: [EXIST, EMPTY]
+      location:
+        type: string
+        enum: [WORLDWIDE, MEGA]
+      mega:
+        type: string
+        #description: mega name?
+      productCode:
+        type: string
+      productType:
+        type: array
+        items:
+          type: string
+          enum: [DEBIT_CARDS, CREDIT_CARDS]
+      program:
+        type: string
+        enum: [MEGA_FRIENDS, IKEA_FAMILY]
+      sex:
+        type: array
+        items:
+          type: string
+          enum: [MALE, FEMALE, UNKNOWN]
+      children:
+        type: array
+        items:
+          type: string
+          enum: [YES, NO, UNKNOWN]

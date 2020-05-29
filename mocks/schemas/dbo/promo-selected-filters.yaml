@@ -1,0 +1,28 @@
+type: object
+required:
+  - period
+  - cityCode
+properties:
+  period:
+    type: object
+    description: when promotion start and end working
+    required:
+      - start
+      - end
+    properties:
+      start:
+        type: number
+        description: unix timestamp
+      end:
+        type: number
+        description: unix timestamp
+  categoryIds:
+    type: array
+    items:
+      type: string
+  megaIds:
+    type: array
+    items:
+      type: string
+  cityCode:
+    type: string

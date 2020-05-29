@@ -1,0 +1,11 @@
+type: object
+description: Session and user info
+required:
+  - role
+properties:
+  role:
+    type: string
+    enum:
+      - ROLE_CALL_CENTER_OPERATOR
+      - ROLE_SECURITY_OFFICER
+      - ROLE_SUPER_ADMIN

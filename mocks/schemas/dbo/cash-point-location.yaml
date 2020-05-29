@@ -1,0 +1,34 @@
+type: object
+description: 'Cash point'
+required:
+  - name
+  - points
+properties:
+  name:
+    type: string
+    example: 'Moscow'
+  points:
+    type: array
+    items:
+      type: object
+      required:
+        - name
+        - address
+        - terminalCount
+        - place
+      properties:
+        name:
+          type: string
+          example: 'Терминал "Элекснет"'
+        address:
+          type: string
+          example: 'Московская область, Покровский 1-й проезд, 5 Котельники'
+        terminalCount:
+          type: integer
+          example: 2
+        imageUrl:
+          type: string
+          example: null
+        place:
+          type: string
+          example: 'МЕГА'

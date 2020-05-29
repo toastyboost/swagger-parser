@@ -1,0 +1,35 @@
+post:
+  summary: Featured promotions
+  operationId: promoFeaturedListGet
+  tags:
+    - Promo
+  security:
+    - apiKey: []
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../dbo-api.yaml#/components/parameters/RequestId'
+  responses:
+    200:
+      description: Featured promotions list
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - promotions
+            properties:
+              promotions:
+                type: array
+                items:
+                  $ref: '../../../dbo-api.yaml#/components/schemas/Promo'
+    400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../dbo-api.yaml#/components/schemas/TechnicalError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'
+    500:
+      $ref: '../../../errors.yaml#/InternalError'

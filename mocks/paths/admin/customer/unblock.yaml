@@ -1,0 +1,38 @@
+post:
+  summary: unblocking all operation for DBO customer
+  operationId: customerUnblock
+  tags:
+    - Customer
+  security:
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../admin-api.yaml#/components/parameters/RequestId'
+  requestBody:
+    description: dbo customer id
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - customerId
+          properties:
+            customerId:
+              description: Идентификатор пользователя в ДБО
+              type: string
+              example: 'f6b35480-ce8c-444b-86c3-a163f7eed7d5'
+  responses:
+    200:
+      description: Unblocking is success
+    400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../admin-api.yaml#/components/schemas/TechnicalError'
+              - $ref: '../../../admin-api.yaml#/components/schemas/ValidationError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'
+    500:
+      $ref: '../../../errors.yaml#/InternalError'

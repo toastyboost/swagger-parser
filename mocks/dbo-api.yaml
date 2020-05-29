@@ -1,0 +1,97 @@
+openapi: 3.0.1
+info:
+  title: DBO API
+  termsOfService: http://swagger.io/terms/
+  version: 1.0.0
+servers:
+  - url: http://10.110.10.50:9090/api/{version}
+    variables:
+      version:
+        default: v1
+        enum:
+          - v0
+          - v1
+
+paths:
+  /bank-products/list-get:
+    $ref: './paths/dbo/bank-products/list-get.yaml'
+  /bank-products/details-get:
+    $ref: './paths/dbo/bank-products/details-get.yaml'
+  /bank-products/account-requisites-get:
+    $ref: './paths/dbo/bank-products/account-requisites-get.yaml'
+  /bank-products/tariffs-get:
+    $ref: './paths/dbo/bank-products/tariffs-get.yaml'
+  /user/profile-get:
+    $ref: './paths/dbo/user/profile-get.yaml'
+  /user/password-recover-start:
+    $ref: './paths/dbo/user/password-recover-start.yaml'
+  /user/password-recover-confirm-phone:
+    $ref: './paths/dbo/user/password-recover-confirm-phone.yaml'
+  /user/password-recover-resend-code:
+    $ref: './paths/dbo/user/password-recover-resend-code.yaml'
+  /user/password-recover-set-new:
+    $ref: './paths/dbo/user/password-recover-set-new.yaml'
+  /promo/list-get:
+    $ref: './paths/dbo/promo/list-get.yaml'
+  /promo/featured-list-get:
+    $ref: './paths/dbo/promo/featured-list-get.yaml'
+  /promo/filters-list-get:
+    $ref: './paths/dbo/promo/filters-list-get.yaml'
+  /public-api/cash-points-get:
+    $ref: './paths/dbo/public-api/cash-points-get.yaml'
+
+components:
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: bearer
+    cookieKey:
+      type: apiKey
+      name: accessToken
+      in: cookie
+
+  parameters:
+    RequestId:
+      name: X-Request-ID
+      description: An identifier of the request
+      in: header
+      required: true
+      schema:
+        type: string
+      example: '87692990-ab78-4e11-90ed-1088bf95a531'
+
+  schemas:
+    BankProduct:
+      $ref: './schemas/dbo/bank-product.yaml'
+    BankProductDetails:
+      $ref: './schemas/dbo/bank-product-details.yaml'
+    BankAccountRequisites:
+      $ref: './schemas/dbo/bank-account-requisites.yaml'
+    BankTariffs:
+      $ref: './schemas/dbo/bank-tariffs.yaml'
+    Program:
+      $ref: './schemas/dbo/program.yaml'
+    Card:
+      $ref: './schemas/dbo/card.yaml'
+    UserProfile:
+      $ref: './schemas/dbo/user-profile.yaml'
+    NextPayment:
+      $ref: './schemas/dbo/next-payment.yaml'
+    PasswordRestoreResponse:
+      $ref: './schemas/dbo/password-restore-response.yaml'
+    TechnicalError:
+      $ref: './errors.yaml#/TechnicalError'
+    ValidationError:
+      $ref: './errors.yaml#/ValidationError'
+    Promo:
+      $ref: './schemas/dbo/promo.yaml'
+    PromoFilters:
+      $ref: './schemas/dbo/promo-filters.yaml'
+    PromoCategory:
+      $ref: './schemas/dbo/promo-category.yaml'
+    PromoSelectedFilters:
+      $ref: './schemas/dbo/promo-selected-filters.yaml'
+    ProductStatus:
+      $ref: './schemas/dbo/product-status.yaml'
+    CashPointLocation:
+      $ref: './schemas/dbo/cash-point-location.yaml'

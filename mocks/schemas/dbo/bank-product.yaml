@@ -1,0 +1,33 @@
+type: object
+required:
+  - id
+  - currency
+  - balance
+  - installmentsCount
+  - linkedCardsCount
+  - programId
+  - status
+properties:
+  id:
+    type: string
+    example: '87692990-ab78-4e11-90ed-1088bf95a532'
+  currency:
+    type: string
+    description: 'ISO 4217 currency code'
+    example: 'RUB'
+  balance:
+    type: number
+    example: 1337.5
+  nextPayment:
+    $ref: '../../dbo-api.yaml#/components/schemas/NextPayment'
+  installmentsCount:
+    type: integer
+    example: 1
+  linkedCardsCount:
+    type: integer
+    example: 2
+  programId:
+    type: string
+    example: 'IKEA'
+  status:
+    $ref: '../../dbo-api.yaml#/components/schemas/ProductStatus'

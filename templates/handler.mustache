@@ -1,0 +1,21 @@
+
+{{#handlers}}
+
+{{payload.type}}
+
+const {{name}} = apiDomain.createEffect<{{payload.name}}, {{result.name}}>({
+  handler: (payload: {{payload.name}}) =>
+    request({
+      method: '{{method}}',
+      url: '{{{url}}}',
+      body: payload,
+      {{#headers.contentType}}
+      headers: {
+        contentType: '{{{headers.contentType}}}'
+      }
+      {{/headers.contentType}}
+    })
+})
+
+{{/handlers}}
+

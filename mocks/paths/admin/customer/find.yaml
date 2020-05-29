@@ -1,0 +1,64 @@
+post:
+  summary: find customer by fio, birthDate and passport
+  operationId: customerFind
+  tags:
+    - Customer
+  security:
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../admin-api.yaml#/components/parameters/RequestId'
+  requestBody:
+    description: customer info for search
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - firstName
+            - lastName
+            - middleName
+            - birthDate
+            - series
+            - number
+          properties:
+            firstName:
+              type: string
+              example: 'Иван'
+            middleName:
+              type: string
+              example: 'Иванович'
+            lastName:
+              type: string
+              example: 'Иванов'
+            birthDate:
+              type: string
+              example: '1990-12-23'
+            series:
+              type: string
+              example: '5308'
+            number:
+              type: string
+              example: '762819'
+  responses:
+    200:
+      description: Search is done
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              customer:
+                $ref: '../../../admin-api.yaml#/components/schemas/Customer'
+    400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../admin-api.yaml#/components/schemas/TechnicalError'
+              - $ref: '../../../admin-api.yaml#/components/schemas/ValidationError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'
+    500:
+      $ref: '../../../errors.yaml#/InternalError'

@@ -1,0 +1,21 @@
+type: object
+description: 'Bank program'
+required:
+  - id
+  - name
+  - fullName
+  - bonusCount
+properties:
+  id:
+    type: string
+    enum: [MEGA, IKEA]
+    example: 'IKEA'
+  name:
+    type: string
+    example: 'IKEA'
+  fullName:
+    type: string
+    example: 'IKEA FAMILY'
+  bonusCount:
+    type: number
+    example: 456.13

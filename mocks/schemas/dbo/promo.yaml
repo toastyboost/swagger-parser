@@ -1,0 +1,40 @@
+type: object
+description: Promotion
+required:
+  - id
+  - title
+  - period
+  - imageUrl
+  - description
+  - categories
+properties:
+  id:
+    type: string
+    example: '6d4070b1-8c2f-4ba6-a61b-60a95ce712bd'
+  title:
+    type: string
+    example: 'Готовимся к новому сезону без суеты!'
+  period:
+    type: object
+    description: when promotion start and end working
+    properties:
+      start:
+        type: number
+        description: unix timestamp
+      end:
+        type: number
+        description: unix timestamp
+  imageUrl:
+    type: string
+    example: 'https://example.com/image.jpg'
+  content:
+    type: string
+    example: 'Никакой переплаты и дополнительных документов, можно оформить рассрочку на срок — 3 месяца...'
+  categories:
+    type: array
+    items:
+      type: string
+      example: '8d5070b1-8c2f-4ba6-a61b-60a95ce712bd'
+  mallName:
+    type: string
+    example: 'MEGA'

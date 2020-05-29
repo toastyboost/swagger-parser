@@ -1,0 +1,47 @@
+post:
+  summary: Upload image for promo
+  operationId: filePromoImageUpload
+  tags:
+    - File
+  security:
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../cms-api.yaml#/components/parameters/RequestId'
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            file:
+              type: string
+              format: binary
+        encoding:
+          file:
+            contentType: image/png, image/jpeg
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            description: Url to uploaded image
+            required:
+              - imageUrl
+            properties:
+              imageUrl:
+                type: string
+                example: http://ikano.ru/image/424.jpg
+    400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../errors.yaml#/TechnicalError'
+              - $ref: '../../../errors.yaml#/ValidationError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'
+    500:
+      $ref: '../../../errors.yaml#/InternalError'

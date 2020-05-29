@@ -1,0 +1,85 @@
+post:
+  summary: Create promotions
+  operationId: promoCreate
+  tags:
+    - Promo
+  security:
+    - apiKey: []
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../cms-api.yaml#/components/parameters/RequestId'
+  requestBody:
+    description: List of promotions to create
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - promo
+          properties:
+            promo:
+              type: array
+              items:
+                $ref: '../../../cms-api.yaml#/components/schemas/Promo'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          examples:
+            CreatedAndFailed:
+              description: Created 2, Failed 2
+              value:
+                failed:
+                  - id: '9513ea6f-39aa-404d-abba-a5db87f49040'
+                    error: DUPLICATED
+                    invalidFieldName: email
+                  - id: 'df9a9291-c58c-40f6-aba2-7fc7ab6139c5'
+                    error: VALIDATION
+                    invalidFieldName: title
+                success:
+                  - '2202e373-2fb6-4ccd-a7f3-d91bc0ac0160'
+                  - '64ed21a4-0ebc-4027-beab-4b28980499e6'
+          schema:
+            type: object
+            description: Deep validation error
+            required:
+              - code
+              - failed
+              - success
+            properties:
+              failed:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - error
+                    - id
+                  properties:
+                    invalidFieldName:
+                      type: string
+                      description: Key is a failed field
+                    error:
+                      type: string
+                      enum: [VALIDATION, DUPLICATED]
+                    id:
+                      type: string
+              success:
+                type: array
+                items:
+                  type: string
+    400:
+      description: Technical or validation error
+      content:
+        application/json:
+          examples:
+            TechnicalError:
+              value:
+                code: TECHNICAL_ERROR
+          schema:
+            $ref: '../../../errors.yaml#/TechnicalError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'
+    500:
+      $ref: '../../../errors.yaml#/InternalError'

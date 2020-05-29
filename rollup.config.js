@@ -11,7 +11,7 @@ import { terser } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
 
-const extensions = ['.ts', '.tsx', '.json'];
+const extensions = ['.ts', '.tsx', '.json', '.yaml'];
 
 export default {
   input: 'src',
@@ -32,6 +32,10 @@ export default {
     ...Object.keys(pkg.peerDependencies || {}),
   ],
   plugins: [
+    resolve({
+      browser: true,
+      extensions,
+    }),
     alias({
       entries: {
         '~': './src',
@@ -41,12 +45,11 @@ export default {
     eslint(),
     typescript({ rollupCommonJSResolveHack: true, clean: true }),
     babel({
+      runtimeHelpers: true,
       extensions,
       exclude: 'node_modules/**',
     }),
-    resolve({
-      extensions,
-    }),
+
     strip(),
     commonjs(),
     terser(),

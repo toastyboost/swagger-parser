@@ -1,0 +1,16 @@
+const basePath = {{{basePath}}};
+
+const request = async ({
+  method = 'post',
+  url,
+  body,
+}) => {
+
+  const headers = {}
+
+  return fetch(`${basePath}/${url}`, {
+    headers,
+    method,
+    body: JSON.stringify(body),
+  })
+}

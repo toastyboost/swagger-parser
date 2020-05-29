@@ -1,0 +1,35 @@
+post:
+  summary: Get list of promotions
+  operationId: cmsPromoListGet
+  tags:
+    - Promo
+  security:
+    - apiKey: []
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../cms-api.yaml#/components/parameters/RequestId'
+  responses:
+    200:
+      description: List of promotions
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - promo
+            properties:
+              promo:
+                type: array
+                items:
+                  $ref: '../../../cms-api.yaml#/components/schemas/Promo'
+    400:
+      description: Technical error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../errors.yaml#/TechnicalError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'
+    500:
+      $ref: '../../../errors.yaml#/InternalError'

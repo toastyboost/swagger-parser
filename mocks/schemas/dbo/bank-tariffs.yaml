@@ -1,0 +1,39 @@
+type: object
+description: Tariffs information
+required:
+  - tariffs
+properties:
+  tariffs:
+    type: array
+    items:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          example: "Комиссия за информирование"
+        information:
+          type: string
+          example: "Комиссия берется один раз в месяц за информирование о проведённых операциях при помощи СМС."
+        description:
+          type: string
+          example: "95,00 ₽/мес"
+        items:
+          type: array
+          items:
+            type: object
+            required:
+              - kind
+              - text
+            properties:
+              kind:
+                type: string
+                enum: [TITLE, SUBTITLE, DESCRIPTION]
+                example: "DESCRIPTION"
+              text:
+                type: string
+                example: "До 20 000,00 ₽/мес, но не более лимита по операциям покупок"
+              information:
+                type: string
+                example: "Комиссия за снятие наличных средств берется банком каждый раз, когда вы снимаете средства в банкомате или в кассе банка."

@@ -1,0 +1,32 @@
+InternalError:
+  description: Something went wrong
+
+BadRequest:
+  description: The server cannot or will not process the request due to an apparent client error
+
+Unauthorized:
+  description: User is unauthorised
+
+TechnicalError:
+  type: object
+  description: 'Technical error'
+  required:
+    - code
+  properties:
+    code:
+      type: string
+      enum: [TECHNICAL_ERROR]
+  example:
+    code: TECHNICAL_ERROR
+
+ValidationError:
+  type: object
+  description: 'Validation error'
+  required:
+    - code
+  properties:
+    code:
+      type: string
+      enum: [VALIDATION_ERROR]
+    invalidFieldName:
+      type: string

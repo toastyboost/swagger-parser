@@ -1,0 +1,36 @@
+type: object
+description: Customer info
+required:
+  - id
+  - phoneNumber
+  - isBlocked
+  - series
+  - number
+properties:
+  id:
+    type: string
+    example: 'f6b35480-ce8c-444b-86c3-a163f7eed7d5'
+  firstName:
+    type: string
+    example: 'Иван'
+  middleName:
+    type: string
+    example: 'Иванович'
+  lastName:
+    type: string
+    example: 'Иванов'
+  phoneNumber:
+    type: string
+    example: '+79312995564'
+  birthDate:
+    type: string
+    format: date
+    example: '1990-12-23'
+  isBlocked:
+    type: boolean
+  series:
+    type: string
+    example: '5309'
+  number:
+    type: string
+    example: '222618'

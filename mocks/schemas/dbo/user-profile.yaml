@@ -1,0 +1,18 @@
+type: object
+description: Current user
+required:
+  - firstName
+  - phoneNumber
+properties:
+  firstName:
+    type: string
+    example: 'Иван'
+  lastName:
+    type: string
+    example: 'Иванов'
+  middleName:
+    type: string
+    example: 'Иванович'
+  phoneNumber:
+    type: string
+    example: '+79999999999'

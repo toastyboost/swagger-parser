@@ -1,0 +1,61 @@
+post:
+  summary: Filters list for promotions
+  operationId: filtersListGet
+  tags:
+    - Promo
+  security:
+    - apiKey: []
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../dbo-api.yaml#/components/parameters/RequestId'
+  responses:
+    200:
+      description: Featured promotions list
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - filters
+            properties:
+              filters:
+                $ref: '../../../dbo-api.yaml#/components/schemas/PromoFilters'
+              defaultFilters:
+                type: object
+                required:
+                  - cityCode
+                properties:
+                  period:
+                    type: object
+                    description: when promotion start and end working
+                    required:
+                      - start
+                      - end
+                    properties:
+                      start:
+                        type: number
+                        description: unix timestamp
+                      end:
+                        type: number
+                        description: unix timestamp
+                  categoryIds:
+                    type: array
+                    items:
+                      type: string
+                  megaIds:
+                    type: array
+                    items:
+                      type: string
+                  cityCode:
+                    type: string
+    400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../dbo-api.yaml#/components/schemas/TechnicalError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'
+    500:
+      $ref: '../../../errors.yaml#/InternalError'

@@ -1,0 +1,20 @@
+{
+  "name": "ikano-api",
+  "version": "0.1.0",
+  "description": "В этом репозитории хранится контракт между сервером и клиентом в формате OpenAPI 3.",
+  "main": "index.js",
+  "scripts": {
+    "bundle-dbo": "swagger-cli bundle dbo-api.yaml -t yaml > bundle/dbo-api.yaml",
+    "bundle-cms": "swagger-cli bundle cms-api.yaml -t yaml > bundle/cms-api.yaml",
+    "bundle-admin": "swagger-cli bundle admin-api.yaml -t yaml > bundle/admin-api.yaml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git-01-pe.ikano.ru:ikano-dbo/ikano-api.git"
+  },
+  "author": "REDMADROBOT",
+  "license": "MIT",
+  "devDependencies": {
+    "swagger-cli": "^2.3.4"
+  }
+}

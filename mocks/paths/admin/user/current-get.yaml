@@ -1,0 +1,29 @@
+post:
+  summary: Get info about current user
+  operationId: userCurrentGet
+  tags:
+    - User
+  security:
+    - cookieKey: []
+  parameters:
+    - $ref: '../../../admin-api.yaml#/components/parameters/RequestId'
+  responses:
+    200:
+      description: Info about current user
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              user:
+                $ref: '../../../admin-api.yaml#/components/schemas/User'
+    400:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '../../../errors.yaml#/TechnicalError'
+    401:
+      $ref: '../../../errors.yaml#/Unauthorized'
+    500:
+      $ref: '../../../errors.yaml#/InternalError'
